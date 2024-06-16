@@ -1,6 +1,5 @@
-import ContentBox from "@/components/content";
 import { Box, CssBaseline } from "@mui/material";
-import AppAppBar from "../../components/appbar";
+import AppAppBar from "../../components/landingappbar";
 import Hero from "@/components/hero";
 
 export default function LandingPage() {

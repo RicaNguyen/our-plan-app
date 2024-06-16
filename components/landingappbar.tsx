@@ -144,7 +144,6 @@ function AppAppBar() {
                 variant="outlined"
                 component="a"
                 href="/sign-in"
-                // sx={{ width: "100%" }}
               >
                 Sign in
               </Button>
@@ -153,8 +152,7 @@ function AppAppBar() {
                 color="primary"
                 variant="contained"
                 component="a"
-                href="/signinpage"
-                // sx={{ width: "100%" }}
+                href="/sign-up"
               >
                 Sign up
               </Button>
