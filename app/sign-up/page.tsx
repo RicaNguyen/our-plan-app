@@ -10,6 +10,7 @@ import AppleIcon from "@mui/icons-material/Apple";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import { SignUpForm } from "./components/sign-up-form";
+import { BackgroundForm } from "./components/background-form";
 
 export default async function SignUpPage() {
   const supabase = createClient();
@@ -99,21 +100,7 @@ export default async function SignUpPage() {
           <SignUpForm />
         </Box>
       </Grid>
-      <Grid
-        item
-        md={6}
-        sx={{
-          height: "100vh",
-          backgroundImage: `url(assets/sign-up-bg.jpg)`,
-          backgroundRepeat: "no-repeat",
-          backgroundColor: (t) =>
-            t.palette.mode === "light"
-              ? t.palette.grey[50]
-              : t.palette.grey[900],
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      />
+      <BackgroundForm />
     </Grid>
   );
 }
