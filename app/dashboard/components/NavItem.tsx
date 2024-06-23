@@ -1,5 +1,5 @@
 import NextLink from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Box, Button, ListItem } from "@mui/material";
 
 const MyStyledButton = (props: any) => {
@@ -7,7 +7,7 @@ const MyStyledButton = (props: any) => {
     <Button
       {...props}
       sx={{
-        backgroundColor: props.active && "rgba(255,255,255, 0.08)",
+        // backgroundColor: props.active && "rgba(255,255,255, 0.08)",
         borderRadius: 1,
         color: props.active ? "secondary.main" : "neutral.300",
         fontWeight: props.active && "fontWeightBold",
@@ -19,9 +19,9 @@ const MyStyledButton = (props: any) => {
         "& .MuiButton-startIcon": {
           color: props.active ? "secondary.main" : "neutral.400",
         },
-        "&:hover": {
-          backgroundColor: "rgba(255,255,255, 0.08)",
-        },
+        // "&:hover": {
+        //   backgroundColor: "rgba(255,255,255, 0.08)",
+        // },
       }}
     >
       {props.children}
@@ -31,8 +31,8 @@ const MyStyledButton = (props: any) => {
 
 export const NavItem = (props: any) => {
   const { href, icon, title, ...others } = props;
-  const router = useRouter();
-  const active = href ? router.pathname === href : false;
+  const pathname = usePathname();
+  const active = href ? pathname === href : false;
 
   return (
     <ListItem

@@ -30,7 +30,8 @@ const DashboardNavbarRoot = styled(AppBar)(({ theme }: { theme: any }) => ({
 export const DashboardNavbar = (props: any) => {
   const theme = useTheme();
   const upLGScreen = useMediaQuery(theme.breakpoints.up(1600));
-  const downMDcreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const upMDcreen = useMediaQuery(theme.breakpoints.up("md"));
+  const downSMcreen = useMediaQuery(theme.breakpoints.down("sm"));
   const { onSidebarOpen, ...other } = props;
 
   return (
@@ -49,9 +50,10 @@ export const DashboardNavbar = (props: any) => {
         <Toolbar
           disableGutters
           sx={{
-            minHeight: 64,
+            minHeight: 70,
             left: 0,
             px: 2,
+            color: "#FFFFFF",
           }}
         >
           <IconButton
@@ -67,85 +69,66 @@ export const DashboardNavbar = (props: any) => {
             <MenuIcon fontSize="small" />
           </IconButton>
 
-          <Grid
-            container
-            spacing={1}
-            p={1}
-            direction={downMDcreen ? "column-reverse" : "row"}
+          <Box
+            display={"flex"}
+            flexDirection={"row"}
+            width={"100%"}
+            alignItems={"center"}
+            gap={1}
           >
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={12}
-              lg={4}
-              sx={(theme: Theme) => ({
-                [theme.breakpoints.down("lg")]: {
-                  display: "none",
-                },
-              })}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <Typography variant="h5">Welcome Back, Rica!</Typography>
-                {upLGScreen && (
-                  <Typography variant="h6">
-                    Let’s unlock knowledge, shape our future together.
-                  </Typography>
-                )}
-              </Box>
-            </Grid>
-
-            <Grid
-              item
-              xs={12}
-              sm={5}
-              md={7}
-              lg={4}
-              display={"flex"}
-              alignItems={"center"}
-            >
-              <Paper
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  borderRadius: "999px",
-                  width: "100%",
-                }}
-              >
-                <IconButton
-                  type="button"
-                  sx={{ p: "10px" }}
-                  aria-label="search"
-                >
-                  <SearchIcon />
-                </IconButton>
-                <InputBase
-                  sx={{ ml: 1, flex: 1 }}
-                  placeholder="Search for all the inspiration you need..."
-                />
-              </Paper>
-            </Grid>
-
-            <Grid
-              item
-              xs={12}
-              sm={7}
-              md={5}
-              lg={4}
-              display={"flex"}
-              alignItems={"center"}
+            <Box
               sx={{
-                justifyContent: {
-                  xs: "space-between",
-                  sm: "flex-end",
-                },
+                display: "flex",
+                flexDirection: "column",
               }}
             >
+              {upMDcreen && (
+                <Typography variant="h5" noWrap>
+                  Welcome Back, Rica!
+                </Typography>
+              )}
+
+              {upLGScreen && (
+                <Typography variant="h6" noWrap>
+                  Let’s unlock knowledge, shape our future together.
+                </Typography>
+              )}
+            </Box>
+
+            <Paper
+              sx={{
+                display: downSMcreen ? "none" : "flex",
+                alignItems: "center",
+                borderRadius: "999px",
+                pr: 1,
+                width: "100%",
+              }}
+            >
+              <IconButton type="button">
+                <SearchIcon />
+              </IconButton>
+              <InputBase
+                sx={{ flex: 1 }}
+                placeholder="Search for all the inspiration you need..."
+              />
+            </Paper>
+
+            <Box
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={downSMcreen ? "space-between" : "flex-end"}
+              sx={{
+                width: downSMcreen ? "100%" : "auto",
+              }}
+            >
+              {downSMcreen && (
+                <IconButton color="inherit">
+                  <Badge badgeContent={0} color="secondary">
+                    <SearchIcon />
+                  </Badge>
+                </IconButton>
+              )}
+
               <IconButton color="inherit">
                 <Badge badgeContent={4} color="secondary">
                   <NotificationsOutlinedIcon />
@@ -156,23 +139,18 @@ export const DashboardNavbar = (props: any) => {
                   <SendOutlinedIcon />
                 </Badge>
               </IconButton>
-              <Button
-                color="primary"
-                variant="outlined"
-                sx={(theme) => ({
-                  borderRadius: "999px",
-                  bgcolor:
-                    theme.palette.mode === "light"
-                      ? "rgba(255, 255, 255, 0.4)"
-                      : "rgba(0, 0, 0, 0.4)",
-                  boxShadow:
-                    theme.palette.mode === "light"
-                      ? `0 0 1px rgba(85, 166, 246, 0.1), 1px 1.5px 2px -1px rgba(85, 166, 246, 0.15), 4px 4px 12px -2.5px rgba(85, 166, 246, 0.15)`
-                      : "0 0 1px rgba(2, 31, 59, 0.7), 1px 1.5px 2px -1px rgba(2, 31, 59, 0.65), 4px 4px 12px -2.5px rgba(2, 31, 59, 0.65)",
-                })}
-              >
-                <AddTwoToneIcon /> Share your docs
-              </Button>
+              <Paper sx={{ borderRadius: "999px" }}>
+                <Button
+                  color="inherit"
+                  variant="outlined"
+                  sx={{
+                    width: "180px",
+                    borderRadius: "999px",
+                  }}
+                >
+                  <AddTwoToneIcon /> Share your docs
+                </Button>
+              </Paper>
               <Avatar
                 sx={{
                   height: 40,
@@ -183,8 +161,8 @@ export const DashboardNavbar = (props: any) => {
               >
                 U
               </Avatar>
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
         </Toolbar>
       </DashboardNavbarRoot>
     </>

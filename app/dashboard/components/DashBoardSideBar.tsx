@@ -3,54 +3,63 @@ import { useEffect } from "react";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
 import PropTypes from "prop-types";
-import PersonIcon from "@mui/icons-material/Person";
-import LogoutIcon from "@mui/icons-material/Logout";
-import GroupIcon from "@mui/icons-material/Group";
-import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
-import StackedBarChartIcon from "@mui/icons-material/StackedBarChart";
-import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
-import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
-import { Box, Divider, Drawer, useMediaQuery } from "@mui/material";
+import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
+import CollectionsBookmarkOutlinedIcon from "@mui/icons-material/CollectionsBookmarkOutlined";
+import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
+import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
+import NewspaperOutlinedIcon from "@mui/icons-material/NewspaperOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
+import HelpOutlinedIcon from "@mui/icons-material/HelpOutlined";
+import { Box, Divider, Drawer, IconButton, useMediaQuery } from "@mui/material";
 import NextImage from "next/image";
 import { NavItem } from "./NavItem";
 import { SIDE_BAR_WIDTH } from "@/app/backupdb/components/constants";
 
 const items = [
   {
-    href: "/admin",
-    icon: <StackedBarChartIcon fontSize="small" />,
+    href: "/dashboard",
+    icon: <DashboardOutlinedIcon fontSize="small" />,
     title: "Dashboard",
   },
   {
-    href: "/admin/orders",
-    icon: <LibraryBooksIcon fontSize="small" />,
-    title: "Orders",
+    href: "/group",
+    icon: <GroupOutlinedIcon fontSize="small" />,
+    title: "Group",
   },
   {
-    href: "/admin/customers",
-    icon: <GroupIcon fontSize="small" />,
-    title: "Customers",
+    href: "/course",
+    icon: <CollectionsBookmarkOutlinedIcon fontSize="small" />,
+    title: "Course",
   },
   {
-    href: "/admin/products",
-    icon: <ShoppingBasketIcon fontSize="small" />,
-    title: "Products",
+    href: "/docs",
+    icon: <FolderOutlinedIcon fontSize="small" />,
+    title: "Docs",
   },
   {
-    href: "/admin/products-items",
-    icon: <ShoppingBagIcon fontSize="small" />,
-    title: "Products Items",
+    href: "/news",
+    icon: <NewspaperOutlinedIcon fontSize="small" />,
+    title: "News",
   },
-  {
-    href: "/admin/account",
-    icon: <PersonIcon fontSize="small" />,
-    title: "Account",
-  },
+];
 
+const SETTINGS_ITEMS = [
   {
-    href: "/",
-    icon: <LogoutIcon fontSize="small" />,
-    title: "SignOut",
+    href: "/profile",
+    icon: <Person2OutlinedIcon fontSize="small" />,
+    title: "Profile",
+  },
+  {
+    href: "/settings",
+    icon: <SettingsOutlinedIcon fontSize="small" />,
+    title: "Settings",
+  },
+  {
+    href: "/logout",
+    icon: <ExitToAppOutlinedIcon fontSize="small" />,
+    title: "Logout",
   },
 ];
 
@@ -83,26 +92,19 @@ export const DashboardSidebar = (props: any) => {
         height: "100%",
       }}
     >
-      <Box sx={{ p: 3 }}>
+      <Box sx={{ p: 2, height: 64 }}>
         <NextLink href="/" passHref>
-          {/* <Logo
-                sx={{
-                  height: 42,
-                  width: 42,
-                }}
-              /> */}
           <NextImage
             alt="logo"
             src="/static/images/logo.png"
-            height={60}
-            width={80}
+            height={44}
+            width={44}
           ></NextImage>
         </NextLink>
       </Box>
       <Divider
         sx={{
-          borderColor: "#2D3748",
-          my: 3,
+          mb: 3,
         }}
       />
       <Box sx={{ flexGrow: 1 }}>
@@ -114,6 +116,34 @@ export const DashboardSidebar = (props: any) => {
             title={item.title}
           />
         ))}
+      </Box>
+      <Divider
+        sx={{
+          my: 3,
+        }}
+      />
+      <Box sx={{ flexGrow: 1 }}>
+        {SETTINGS_ITEMS.map((item) => (
+          <NavItem
+            key={item.title}
+            icon={item.icon}
+            href={item.href}
+            title={item.title}
+          />
+        ))}
+      </Box>
+      <Divider
+        sx={{
+          my: 3,
+        }}
+      />
+      <Box>
+        <NavItem
+          key={"Help"}
+          icon={<HelpOutlinedIcon fontSize="inherit" />}
+          href={""}
+          title={"Help"}
+        />
       </Box>
     </Box>
   );
@@ -144,7 +174,7 @@ export const DashboardSidebar = (props: any) => {
       open={open}
       PaperProps={{
         sx: {
-          backgroundColor: "neutral.900",
+          // backgroundColor: "neutral.900",
           color: "#FFFFFF",
           width: SIDE_BAR_WIDTH,
         },
