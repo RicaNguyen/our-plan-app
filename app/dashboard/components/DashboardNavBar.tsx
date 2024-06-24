@@ -20,17 +20,21 @@ import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import { SIDE_BAR_WIDTH } from "./constants";
+import { useState } from "react";
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }: { theme: any }) => ({
   boxShadow: theme.shadows[3],
 }));
 
 export const DashboardNavbar = (props: any) => {
-  const theme = useTheme();
-  const upLGScreen = useMediaQuery(theme.breakpoints.up(1600));
-  const upMDcreen = useMediaQuery(theme.breakpoints.up("md"));
-  const downSMcreen = useMediaQuery(theme.breakpoints.down("sm"));
   const { onSidebarOpen, ...other } = props;
+
+  const theme = useTheme();
+  const lgScreenUp = useMediaQuery(theme.breakpoints.up(1600));
+  const mdScreenUp = useMediaQuery(theme.breakpoints.up("md"));
+  const smScreenDown = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const [searchBarActive, setSearchBarActive] = useState<boolean>(false);
 
   return (
     <>
@@ -80,50 +84,68 @@ export const DashboardNavbar = (props: any) => {
                 flexDirection: "column",
               }}
             >
-              {upMDcreen && (
+              {mdScreenUp && (
                 <Typography variant="h5" noWrap>
                   Welcome Back, Rica!
                 </Typography>
               )}
 
-              {upLGScreen && (
+              {lgScreenUp && (
                 <Typography variant="h6" noWrap>
                   Let’s unlock knowledge, shape our future together.
                 </Typography>
               )}
             </Box>
 
-            <Paper
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                borderRadius: "999px",
-                pr: 1,
-                width: "100%",
-              }}
-            >
-              <IconButton type="button">
-                <SearchIcon />
-              </IconButton>
-              <InputBase
-                sx={{ flex: 1 }}
-                placeholder="Search for all the inspiration you need..."
-              />
-            </Paper>
+            {(!smScreenDown || searchBarActive) && (
+              <Paper
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  borderRadius: "999px",
+                  pr: 1,
+                  width: "100%",
+                }}
+              >
+                <IconButton
+                  type="button"
+                  onClick={() => {
+                    if (smScreenDown) {
+                      setSearchBarActive(!searchBarActive);
+                    }
+                  }}
+                >
+                  <SearchIcon />
+                </IconButton>
+                <InputBase
+                  sx={{ flex: 1 }}
+                  placeholder="Search for all the inspiration you need..."
+                  // onFocus={() => {
+                  //   setSearchBarActive(true);
+                  // }}
+                  onBlur={() => {
+                    setSearchBarActive(false);
+                  }}
+                />
+              </Paper>
+            )}
 
             <Box
-              display={"flex"}
+              display={searchBarActive ? "none" : "flex"}
               alignItems={"center"}
-              justifyContent={downSMcreen ? "space-between" : "flex-end"}
+              justifyContent={smScreenDown ? "space-between" : "flex-end"}
               sx={{
-                width: downSMcreen ? "100%" : "auto",
+                width: smScreenDown ? "100%" : "auto",
               }}
             >
-              {downSMcreen && (
-                <IconButton color="inherit">
-                  <Badge badgeContent={0} color="secondary">
-                    <SearchIcon />
-                  </Badge>
+              {smScreenDown && (
+                <IconButton
+                  color="inherit"
+                  onClick={() => {
+                    setSearchBarActive(!searchBarActive);
+                  }}
+                >
+                  <SearchIcon />
                 </IconButton>
               )}
 

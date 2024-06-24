@@ -15,6 +15,7 @@ import { Box, Divider, Drawer, IconButton, useMediaQuery } from "@mui/material";
 import NextImage from "next/image";
 import { NavItem } from "./NavItem";
 import { SIDE_BAR_WIDTH } from "./constants";
+import { ToggleColorMode } from "@/components/theme/ColorModeContext";
 
 const items = [
   {
@@ -129,6 +130,9 @@ export const DashboardSidebar = (props: any) => {
         }}
       />
       <Box>
+        <NavItem>
+          <ToggleColorMode />
+        </NavItem>
         <NavItem
           key={"Help"}
           icon={<HelpOutlinedIcon fontSize="inherit" />}

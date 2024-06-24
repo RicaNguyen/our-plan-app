@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   CssBaseline,
+  IconButton,
   ThemeProvider,
   useMediaQuery,
 } from "@mui/material";
@@ -73,20 +74,22 @@ export const ToggleColorMode = () => {
   const { mode, toggleThemeMode } = useThemeContext();
 
   return (
-    <Box sx={{ maxWidth: "32px" }}>
-      <Button
-        variant="text"
-        onClick={() => toggleThemeMode(mode === "dark" ? "light" : "dark")}
-        size="small"
-        aria-label="button to toggle theme"
-        sx={{ minWidth: "32px", height: "32px", p: "4px" }}
-      >
-        {mode === "dark" ? (
-          <WbSunnyRoundedIcon fontSize="small" />
-        ) : (
-          <ModeNightRoundedIcon fontSize="small" />
-        )}
-      </Button>
-    </Box>
+    <IconButton
+      color="primary"
+      onClick={() => toggleThemeMode(mode === "dark" ? "light" : "dark")}
+      size="small"
+      aria-label="button to toggle theme"
+      sx={{
+        minWidth: "32px",
+        height: "32px",
+        p: "4px",
+      }}
+    >
+      {mode === "dark" ? (
+        <WbSunnyRoundedIcon fontSize="small" />
+      ) : (
+        <ModeNightRoundedIcon fontSize="small" />
+      )}
+    </IconButton>
   );
 };

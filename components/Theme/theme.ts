@@ -592,7 +592,7 @@ export function getLPTheme(mode: PaletteMode): ThemeOptions {
               color: "white",
             },
             "& .MuiInputBase-input": {
-              boxSizing: "border-box",
+              // boxSizing: "border-box",
               "&::placeholder": {
                 opacity: 0.7,
               },
@@ -627,11 +627,11 @@ export function getLPTheme(mode: PaletteMode): ThemeOptions {
                 minHeight: 40,
                 height: "100%",
                 borderRadius: "10px",
-                // border: "1px solid",
+                border: "1px solid",
                 borderColor: gray[600],
                 transition: "border-color 120ms ease-in",
                 "& fieldset": {
-                  // border: "none",
+                  border: "none",
                   boxShadow: " 0px 2px 4px rgba(0, 0, 0, 0.4)",
                   background: `${alpha(gray[800], 0.4)}`,
                 },

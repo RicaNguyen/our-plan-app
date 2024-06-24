@@ -30,7 +30,7 @@ const MyStyledButton = (props: any) => {
 };
 
 export const NavItem = (props: any) => {
-  const { href, icon, title, ...others } = props;
+  const { href, icon, title, children, ...others } = props;
   const pathname = usePathname();
   const active = href ? pathname === href : false;
 
@@ -45,24 +45,28 @@ export const NavItem = (props: any) => {
       }}
       {...others}
     >
-      <NextLink
-        href={href || "/"}
-        passHref
-        style={{
-          textDecoration: "none",
-          color: "inherit",
-        }}
-      >
-        <MyStyledButton
-          // component="a"
-          startIcon={icon}
-          disableRipple
-          active={active === true ? "true" : undefined}
-          //   onClick={title === "SignOut" ? () => signOut() : null}
+      {children ? (
+        <Box sx={{ px: 1.6, flexGrow: 1 }}>{children}</Box>
+      ) : (
+        <NextLink
+          href={href || "/"}
+          passHref
+          style={{
+            textDecoration: "none",
+            color: "inherit",
+          }}
         >
-          <Box sx={{ flexGrow: 1 }}>{title}</Box>
-        </MyStyledButton>
-      </NextLink>
+          <MyStyledButton
+            // component="a"
+            startIcon={icon}
+            disableRipple
+            active={active === true ? "true" : undefined}
+            //   onClick={title === "SignOut" ? () => signOut() : null}
+          >
+            <Box sx={{ flexGrow: 1 }}>{title}</Box>
+          </MyStyledButton>
+        </NextLink>
+      )}
     </ListItem>
   );
 };
