@@ -1,7 +1,6 @@
 "use client";
 import { useEffect } from "react";
 import NextLink from "next/link";
-import { useRouter } from "next/navigation";
 import PropTypes from "prop-types";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
@@ -15,7 +14,7 @@ import HelpOutlinedIcon from "@mui/icons-material/HelpOutlined";
 import { Box, Divider, Drawer, IconButton, useMediaQuery } from "@mui/material";
 import NextImage from "next/image";
 import { NavItem } from "./NavItem";
-import { SIDE_BAR_WIDTH } from "@/app/backupdb/components/constants";
+import { SIDE_BAR_WIDTH } from "./constants";
 
 const items = [
   {
@@ -65,24 +64,16 @@ const SETTINGS_ITEMS = [
 
 export const DashboardSidebar = (props: any) => {
   const { open, onClose } = props;
-  const router = useRouter();
   const lgUp = useMediaQuery((theme: any) => theme.breakpoints.up("lg"), {
     defaultMatches: true,
     noSsr: false,
   });
 
-  useEffect(
-    () => {
-      // if (!router.isReady) {
-      //   return;
-      // }
-      if (open) {
-        onClose?.();
-      }
+  useEffect(() => {
+    if (open) {
+      onClose?.();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    // [router.asPath]
-  );
+  }, []);
 
   const content = (
     <Box
@@ -166,7 +157,6 @@ export const DashboardSidebar = (props: any) => {
       </Drawer>
     );
   }
-
   return (
     <Drawer
       anchor="left"

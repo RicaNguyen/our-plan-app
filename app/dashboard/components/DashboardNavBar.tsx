@@ -6,11 +6,9 @@ import {
   Badge,
   Box,
   Button,
-  Grid,
   IconButton,
   InputBase,
   Paper,
-  Theme,
   Toolbar,
   Typography,
   useMediaQuery,
@@ -21,7 +19,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
-import { SIDE_BAR_WIDTH } from "@/app/backupdb/components/constants";
+import { SIDE_BAR_WIDTH } from "./constants";
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }: { theme: any }) => ({
   boxShadow: theme.shadows[3],
@@ -97,7 +95,7 @@ export const DashboardNavbar = (props: any) => {
 
             <Paper
               sx={{
-                display: downSMcreen ? "none" : "flex",
+                display: "flex",
                 alignItems: "center",
                 borderRadius: "999px",
                 pr: 1,
