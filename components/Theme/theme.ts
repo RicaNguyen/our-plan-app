@@ -66,7 +66,7 @@ const getDesignTokens = (mode: PaletteMode) => ({
       light: brand[200],
       main: brand[500],
       dark: brand[800],
-      contrastText: brand[50],
+      contrastText: grey[800],
       ...(mode === "dark" && {
         contrastText: brand[100],
         light: brand[300],
@@ -109,18 +109,7 @@ const getDesignTokens = (mode: PaletteMode) => ({
         dark: green[700],
       }),
     },
-    grey: {
-      50: grey[50],
-      100: grey[100],
-      200: grey[200],
-      300: grey[300],
-      400: grey[400],
-      500: grey[500],
-      600: grey[600],
-      700: grey[700],
-      800: grey[800],
-      900: grey[900],
-    },
+    grey: grey,
     divider: mode === "dark" ? alpha(grey[600], 0.3) : alpha(grey[300], 0.5),
     background: {
       default: "#fff",

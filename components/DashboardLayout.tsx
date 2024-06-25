@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Typography, Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { DashboardNavbar } from "./DashboardNavBar";
 import { DashboardSidebar } from "./DashBoardSideBar";
@@ -31,13 +31,27 @@ export const DashboardLayout = (props: any) => {
             width: "100%",
           }}
         >
+          <Container maxWidth="xl">
+            <Typography variant="h5">Welcome Back, Rica! 👋</Typography>
+
+            <Typography variant="h6">
+              Let’s unlock knowledge, shape our future together.
+            </Typography>
+          </Container>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          ></Box>
+
           {children}
         </Box>
       </DashboardLayoutRoot>
       <DashboardNavbar onSidebarOpen={() => setSidebarOpen(true)} />
       <DashboardSidebar
-        onClose={() => setSidebarOpen(false)}
-        open={isSidebarOpen}
+        onCloseSidebar={() => setSidebarOpen(false)}
+        openSidebar={isSidebarOpen}
       />
     </>
   );
