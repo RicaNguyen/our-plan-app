@@ -31,7 +31,12 @@ export const DashboardLayout = (props: any) => {
             width: "100%",
           }}
         >
-          <Container maxWidth="xl">
+          <Container
+            maxWidth="xl"
+            sx={{
+              mt: 4,
+            }}
+          >
             <Typography variant="h5">Welcome Back, Rica! 👋</Typography>
 
             <Typography variant="h6">

@@ -8,6 +8,7 @@ import {
 import {
   ReactNode,
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -37,10 +38,10 @@ export const ThemeModeProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   //Toggle theme mode function
-  const toggleThemeMode = (newMode: string) => {
+  const toggleThemeMode = useCallback((newMode: string) => {
     window.localStorage.setItem("theme", newMode);
     setMode(newMode);
-  };
+  }, []);
 
   //Create theme based on color mode state
   const theme = useMemo(
