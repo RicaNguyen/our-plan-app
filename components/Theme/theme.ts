@@ -1,39 +1,10 @@
-"use client";
-import { Roboto } from "next/font/google";
 import { createTheme } from "@mui/material/styles";
-// import { Warning } from "postcss";
-// import { getContrastRatio } from "@mui/material/styles";
-// import { alpha } from "@mui/material/styles";
-
-const roboto = Roboto({
-  weight: ["300", "400", "500", "700"],
-  subsets: ["latin"],
-  display: "swap",
-});
-// const violetBase = "#7F00FF";
-// const violetMain = alpha(violetBase, 0.7);
 
 import type {} from "@mui/material/themeCssVarsAugmentation";
-import { ThemeOptions, alpha } from "@mui/material/styles";
+import { alpha } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
-import { PaletteMode } from "@mui/material";
-
-declare module "@mui/material/styles/createPalette" {
-  interface ColorRange {
-    50: string;
-    100: string;
-    200: string;
-    300: string;
-    400: string;
-    500: string;
-    600: string;
-    700: string;
-    800: string;
-    900: string;
-  }
-
-  interface PaletteColor extends ColorRange {}
-}
+import { PaletteMode, Theme } from "@mui/material";
+import { typography } from "./typography";
 
 export const brand = {
   50: "#F0F7FF",
@@ -61,7 +32,8 @@ export const secondary = {
   900: "#23023B",
 };
 
-export const gray = {
+export const grey = {
+  0: "#FFFFFF",
   50: "#FBFCFE",
   100: "#EAF0F5",
   200: "#D6E2EB",
@@ -138,27 +110,27 @@ const getDesignTokens = (mode: PaletteMode) => ({
       }),
     },
     grey: {
-      50: gray[50],
-      100: gray[100],
-      200: gray[200],
-      300: gray[300],
-      400: gray[400],
-      500: gray[500],
-      600: gray[600],
-      700: gray[700],
-      800: gray[800],
-      900: gray[900],
+      50: grey[50],
+      100: grey[100],
+      200: grey[200],
+      300: grey[300],
+      400: grey[400],
+      500: grey[500],
+      600: grey[600],
+      700: grey[700],
+      800: grey[800],
+      900: grey[900],
     },
-    divider: mode === "dark" ? alpha(gray[600], 0.3) : alpha(gray[300], 0.5),
+    divider: mode === "dark" ? alpha(grey[600], 0.3) : alpha(grey[300], 0.5),
     background: {
       default: "#fff",
-      paper: gray[50],
-      ...(mode === "dark" && { default: gray[900], paper: gray[800] }),
+      paper: grey[50],
+      ...(mode === "dark" && { default: grey[900], paper: grey[800] }),
     },
     text: {
-      primary: gray[800],
-      secondary: gray[600],
-      ...(mode === "dark" && { primary: "#fff", secondary: gray[400] }),
+      primary: grey[800],
+      secondary: grey[600],
+      ...(mode === "dark" && { primary: "#fff", secondary: grey[400] }),
     },
     action: {
       selected: `${alpha(brand[200], 0.2)}`,
@@ -167,58 +139,10 @@ const getDesignTokens = (mode: PaletteMode) => ({
       }),
     },
   },
-  typography: {
-    // fontFamily: ['"Inter", "sans-serif"'].join(","),
-    // fontFamily: roboto.style.fontFamily,
-    h1: {
-      fontSize: 60,
-      fontWeight: 600,
-      lineHeight: 78 / 70,
-      letterSpacing: -0.2,
-    },
-    h2: {
-      fontSize: 48,
-      fontWeight: 600,
-      lineHeight: 1.2,
-    },
-    h3: {
-      fontSize: 42,
-      lineHeight: 1.2,
-    },
-    h4: {
-      fontSize: 36,
-      fontWeight: 500,
-      lineHeight: 1.5,
-    },
-    h5: {
-      fontSize: 20,
-      fontWeight: 600,
-    },
-    h6: {
-      fontSize: 18,
-    },
-    subtitle1: {
-      fontSize: 18,
-    },
-    subtitle2: {
-      fontSize: 16,
-    },
-    body1: {
-      fontWeight: 400,
-      fontSize: 15,
-    },
-    body2: {
-      fontWeight: 400,
-      fontSize: 14,
-    },
-    caption: {
-      fontWeight: 400,
-      fontSize: 12,
-    },
-  },
+  typography,
 });
 
-export function getLPTheme(mode: PaletteMode): ThemeOptions {
+export const getLPTheme = (mode: PaletteMode): Theme => {
   return createTheme({
     ...getDesignTokens(mode),
     components: {
@@ -233,7 +157,7 @@ export function getLPTheme(mode: PaletteMode): ThemeOptions {
             overflow: "clip",
             backgroundColor: "#fff",
             border: "1px solid",
-            borderColor: gray[100],
+            borderColor: grey[100],
             ":before": {
               backgroundColor: "transparent",
             },
@@ -246,8 +170,8 @@ export function getLPTheme(mode: PaletteMode): ThemeOptions {
               borderBottomRightRadius: 10,
             },
             ...(theme.palette.mode === "dark" && {
-              backgroundColor: gray[900],
-              borderColor: gray[800],
+              backgroundColor: grey[900],
+              borderColor: grey[800],
             }),
           }),
         },
@@ -257,9 +181,9 @@ export function getLPTheme(mode: PaletteMode): ThemeOptions {
           root: ({ theme }) => ({
             border: "none",
             borderRadius: 8,
-            "&:hover": { backgroundColor: gray[100] },
+            "&:hover": { backgroundColor: grey[100] },
             ...(theme.palette.mode === "dark" && {
-              "&:hover": { backgroundColor: gray[800] },
+              "&:hover": { backgroundColor: grey[800] },
             }),
           }),
         },
@@ -273,7 +197,7 @@ export function getLPTheme(mode: PaletteMode): ThemeOptions {
         styleOverrides: {
           root: ({ theme }) => ({
             borderRadius: "10px",
-            boxShadow: `0 4px 16px ${alpha(gray[400], 0.2)}`,
+            boxShadow: `0 4px 16px ${alpha(grey[400], 0.2)}`,
             "& .Mui-selected": {
               color: brand[500],
             },
@@ -294,7 +218,7 @@ export function getLPTheme(mode: PaletteMode): ThemeOptions {
             borderRadius: "10px",
             fontWeight: 500,
             ...(theme.palette.mode === "dark" && {
-              color: gray[400],
+              color: grey[400],
               boxShadow: "0 4px 16px rgba(0, 0, 0, 0.5)",
               "&.Mui-selected": { color: brand[300] },
             }),
@@ -386,24 +310,24 @@ export function getLPTheme(mode: PaletteMode): ThemeOptions {
       MuiCard: {
         styleOverrides: {
           root: ({ theme, ownerState }) => ({
-            backgroundColor: gray[50],
+            backgroundColor: grey[50],
             borderRadius: 10,
-            border: `1px solid ${alpha(gray[200], 0.8)}`,
+            border: `1px solid ${alpha(grey[200], 0.8)}`,
             boxShadow: "none",
             transition: "background-color, border, 80ms ease",
             ...(ownerState.variant === "outlined" && {
-              background: `linear-gradient(to bottom, #FFF, ${gray[50]})`,
+              background: `linear-gradient(to bottom, #FFF, ${grey[50]})`,
               "&:hover": {
                 borderColor: brand[300],
                 boxShadow: `0 0 24px ${brand[100]}`,
               },
             }),
             ...(theme.palette.mode === "dark" && {
-              backgroundColor: alpha(gray[800], 0.6),
-              border: `1px solid ${alpha(gray[700], 0.3)}`,
+              backgroundColor: alpha(grey[800], 0.6),
+              border: `1px solid ${alpha(grey[700], 0.3)}`,
               ...(ownerState.variant === "outlined" && {
-                background: `linear-gradient(to bottom, ${gray[900]}, ${alpha(
-                  gray[800],
+                background: `linear-gradient(to bottom, ${grey[900]}, ${alpha(
+                  grey[800],
                   0.5
                 )})`,
                 "&:hover": {
@@ -461,9 +385,9 @@ export function getLPTheme(mode: PaletteMode): ThemeOptions {
       MuiDivider: {
         styleOverrides: {
           root: ({ theme }) => ({
-            borderColor: `${alpha(gray[200], 0.8)}`,
+            borderColor: `${alpha(grey[200], 0.8)}`,
             ...(theme.palette.mode === "dark" && {
-              borderColor: `${alpha(gray[700], 0.4)}`,
+              borderColor: `${alpha(grey[700], 0.4)}`,
             }),
           }),
         },
@@ -503,10 +427,10 @@ export function getLPTheme(mode: PaletteMode): ThemeOptions {
         styleOverrides: {
           root: ({ theme }) => ({
             borderRadius: "99px",
-            color: gray[500],
+            color: grey[500],
             fontWeight: 500,
             ...(theme.palette.mode === "dark" && {
-              color: gray[300],
+              color: grey[300],
             }),
           }),
         },
@@ -515,9 +439,9 @@ export function getLPTheme(mode: PaletteMode): ThemeOptions {
         styleOverrides: {
           root: ({ theme }) => ({
             backgroundImage: "none",
-            backgroundColor: gray[100],
+            backgroundColor: grey[100],
             ...(theme.palette.mode === "dark" && {
-              backgroundColor: alpha(gray[900], 0.6),
+              backgroundColor: alpha(grey[800], 0.6),
             }),
           }),
         },
@@ -604,7 +528,7 @@ export function getLPTheme(mode: PaletteMode): ThemeOptions {
               height: "100%",
               borderRadius: "10px",
               // border: "1px solid",
-              borderColor: gray[200],
+              borderColor: grey[200],
               transition: "border-color 120ms ease-in",
               "& fieldset": {
                 // border: "none",
@@ -628,12 +552,12 @@ export function getLPTheme(mode: PaletteMode): ThemeOptions {
                 height: "100%",
                 borderRadius: "10px",
                 border: "1px solid",
-                borderColor: gray[600],
+                borderColor: grey[600],
                 transition: "border-color 120ms ease-in",
                 "& fieldset": {
                   border: "none",
                   boxShadow: " 0px 2px 4px rgba(0, 0, 0, 0.4)",
-                  background: `${alpha(gray[800], 0.4)}`,
+                  background: `${alpha(grey[800], 0.4)}`,
                 },
                 "&:hover": {
                   borderColor: brand[300],
@@ -650,7 +574,7 @@ export function getLPTheme(mode: PaletteMode): ThemeOptions {
       },
     },
   });
-}
+};
 
 export const themeDark = getLPTheme("dark");
 

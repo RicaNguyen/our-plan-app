@@ -11,9 +11,9 @@ import NewspaperOutlinedIcon from "@mui/icons-material/NewspaperOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import HelpOutlinedIcon from "@mui/icons-material/HelpOutlined";
-import { Box, Divider, Drawer, IconButton, useMediaQuery } from "@mui/material";
+import { Box, Divider, Drawer, useMediaQuery } from "@mui/material";
 import NextImage from "next/image";
-import { NavItem } from "./NavItem";
+import { NavItem } from "../app/dashboard/components/NavItem";
 import { SIDE_BAR_WIDTH } from "./constants";
 import { ToggleColorMode } from "@/components/theme/ColorModeContext";
 
@@ -74,7 +74,7 @@ export const DashboardSidebar = (props: any) => {
     if (open) {
       onClose?.();
     }
-  }, []);
+  }, [open, onClose]);
 
   const content = (
     <Box
@@ -135,7 +135,7 @@ export const DashboardSidebar = (props: any) => {
         </NavItem>
         <NavItem
           key={"Help"}
-          icon={<HelpOutlinedIcon fontSize="inherit" />}
+          icon={<HelpOutlinedIcon />}
           href={""}
           title={"Help"}
         />
@@ -150,9 +150,9 @@ export const DashboardSidebar = (props: any) => {
         open
         PaperProps={{
           sx: {
-            backgroundColor: "neutral.900",
-            color: "#FFFFFF",
+            backgroundColor: "background.default",
             width: SIDE_BAR_WIDTH,
+            px: 2,
           },
         }}
         variant="permanent"
@@ -168,9 +168,9 @@ export const DashboardSidebar = (props: any) => {
       open={open}
       PaperProps={{
         sx: {
-          // backgroundColor: "neutral.900",
-          color: "#FFFFFF",
+          backgroundColor: "background.default",
           width: SIDE_BAR_WIDTH,
+          px: 2,
         },
       }}
       sx={{ zIndex: (theme) => theme.zIndex.appBar + 100 }}
