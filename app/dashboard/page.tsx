@@ -2,46 +2,25 @@
 import * as React from "react";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import Chart from "./components/Chart";
-import Deposits from "./components/Deposits";
-import Orders from "./components/Orders";
-
+import ScheduleBoard from "./components/ScheduleForm";
+import ExamScheduleBoard from "./components/ExamSchedule";
+import MiniTab from "./components/MiniTab";
 export default function Dashboard() {
   return (
-    <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
-      <Grid container spacing={3}>
-        {/* Chart */}
-        <Grid item xs={12} md={8} lg={9}>
-          <Paper
-            sx={{
-              p: 2,
-              display: "flex",
-              flexDirection: "column",
-              height: 240,
-            }}
-          >
-            <Chart />
-          </Paper>
+    <Container maxWidth="xl" sx={{ mt: 3, mb: 3 }}>
+      <Grid container spacing={17}>
+        <Grid item xs={12} md={6}>
+          <Grid container direction="column" spacing={7}>
+            <Grid item>
+              <ScheduleBoard />
+            </Grid>
+            <Grid item>
+              <ExamScheduleBoard />
+            </Grid>
+          </Grid>
         </Grid>
-        {/* Recent Deposits */}
-        <Grid item xs={12} md={4} lg={3}>
-          <Paper
-            sx={{
-              p: 2,
-              display: "flex",
-              flexDirection: "column",
-              height: 240,
-            }}
-          >
-            <Deposits />
-          </Paper>
-        </Grid>
-        {/* Recent Orders */}
-        <Grid item xs={12}>
-          <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-            <Orders />
-          </Paper>
+        <Grid item xs={12} md={6}>
+          <MiniTab />
         </Grid>
       </Grid>
     </Container>
