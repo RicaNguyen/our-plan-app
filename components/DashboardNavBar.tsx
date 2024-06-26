@@ -13,7 +13,6 @@ import {
   Paper,
   Theme,
   Toolbar,
-  useTheme,
   ClickAwayListener,
   alpha,
 } from "@mui/material";
@@ -35,26 +34,26 @@ const DashboardNavbarRoot = styled(AppBar)(({ theme }: { theme: Theme }) => ({
 }));
 
 const SearchBar = (): ReactNode => {
-  const [open, setOpen] = useState(false);
+  const [openSearchBar, setOpenSearchBar] = useState(false);
 
-  const handleOpen = () => {
-    setOpen(!open);
+  const handleOpenSearchBar = () => {
+    setOpenSearchBar(!openSearchBar);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseSearchBar = () => {
+    setOpenSearchBar(false);
   };
 
   return (
-    <ClickAwayListener onClickAway={handleClose}>
+    <ClickAwayListener onClickAway={handleCloseSearchBar}>
       <div>
-        {!open && (
-          <IconButton onClick={handleOpen}>
+        {!openSearchBar && (
+          <IconButton onClick={handleOpenSearchBar}>
             <SearchIcon />
           </IconButton>
         )}
 
-        <Slide direction="down" in={open} mountOnEnter unmountOnExit>
+        <Slide direction="down" in={openSearchBar} mountOnEnter unmountOnExit>
           <Box
             sx={(theme) => ({
               backdropFilter: `blur(${6}px)`,
@@ -88,7 +87,7 @@ const SearchBar = (): ReactNode => {
               }
               sx={{ mr: 1, fontWeight: "fontWeightBold" }}
             />
-            <Button variant="contained" onClick={handleClose}>
+            <Button variant="contained" onClick={handleCloseSearchBar}>
               Search
             </Button>
           </Box>
@@ -100,7 +99,6 @@ const SearchBar = (): ReactNode => {
 
 export const DashboardNavbar = (props: any) => {
   const { onSidebarOpen, ...other } = props;
-  const theme = useTheme();
 
   return (
     <>
@@ -117,13 +115,16 @@ export const DashboardNavbar = (props: any) => {
       >
         <Toolbar
           disableGutters
-          sx={{
+          sx={(theme) => ({
             minHeight: 70,
             left: 0,
             px: 2,
-
             backgroundColor: "background.default",
-          }}
+            boxShadow:
+              theme.palette.mode === "light"
+                ? `0 0 1px rgba(85, 166, 246, 0.1), 1px 1.5px 2px -1px rgba(85, 166, 246, 0.15), 4px 4px 12px -2.5px rgba(85, 166, 246, 0.15)`
+                : "0 0 1px rgba(2, 31, 59, 0.7), 1px 1.5px 2px -1px rgba(2, 31, 59, 0.65), 4px 4px 12px -2.5px rgba(2, 31, 59, 0.65)",
+          })}
         >
           <IconButton
             onClick={onSidebarOpen}

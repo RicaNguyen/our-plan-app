@@ -11,7 +11,7 @@ import NewspaperOutlinedIcon from "@mui/icons-material/NewspaperOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import HelpOutlinedIcon from "@mui/icons-material/HelpOutlined";
-import { Box, Divider, Drawer, useMediaQuery } from "@mui/material";
+import { Box, Divider, Drawer, Theme, useMediaQuery } from "@mui/material";
 import NextImage from "next/image";
 import { NavItem } from "../app/dashboard/components/NavItem";
 import { SIDE_BAR_WIDTH } from "./constants";
@@ -63,18 +63,24 @@ const SETTINGS_ITEMS = [
   },
 ];
 
-export const DashboardSidebar = (props: any) => {
-  const { open, onClose } = props;
-  const lgUp = useMediaQuery((theme: any) => theme.breakpoints.up("lg"), {
+type DashboardSidebarProps = {
+  openSidebar: boolean;
+  onCloseSidebar: () => void;
+};
+
+export const DashboardSidebar = (props: DashboardSidebarProps) => {
+  const { openSidebar, onCloseSidebar } = props;
+  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("lg"), {
     defaultMatches: true,
     noSsr: false,
   });
 
   useEffect(() => {
-    if (open) {
-      onClose?.();
+    if (openSidebar) {
+      onCloseSidebar();
     }
-  }, [open, onClose]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const content = (
     <Box
@@ -164,8 +170,8 @@ export const DashboardSidebar = (props: any) => {
   return (
     <Drawer
       anchor="left"
-      onClose={onClose}
-      open={open}
+      onClose={onCloseSidebar}
+      open={openSidebar}
       PaperProps={{
         sx: {
           backgroundColor: "background.default",
