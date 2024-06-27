@@ -9,9 +9,9 @@ export default function MiniTab() {
   const mdScreenUp = useMediaQuery(theme.breakpoints.up("md"));
   const smScreenDown = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const [value, setValue] = React.useState(2);
+  const [value, setValue] = React.useState("1");
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
   return (
