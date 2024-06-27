@@ -13,19 +13,21 @@ import {
   MenuItem,
   Paper,
   Select,
+  Stack,
   Table,
   TableCell,
   TableHead,
   TableRow,
   TextField,
+  Tooltip,
   Typography,
+  styled,
   useTheme,
 } from "@mui/material";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
 import React from "react";
 import { TimePicker } from "@mui/x-date-pickers";
-import { Label } from "@mui/icons-material";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -37,7 +39,25 @@ interface Event {
 interface Events {
   [day: string]: { [hour: string]: Event };
 }
-
+const ProSpan = styled("span")({
+  display: "inline-block",
+});
+function Label({
+  componentName,
+  valueType,
+  isProOnly,
+}: {
+  componentName: string;
+  valueType: string;
+  isProOnly?: boolean;
+}) {
+  const content = (
+    <span>
+      <>{componentName}</>
+    </span>
+  );
+  return content;
+}
 export default function ScheduleBoard() {
   const theme = useTheme();
 
@@ -96,7 +116,7 @@ export default function ScheduleBoard() {
       </Typography>
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Box flex={1}>
-          <Typography variant="h6">Exam Schedule</Typography>
+          <Typography variant="h6"> Schedule</Typography>
         </Box>
         <Box flex={1} textAlign="right">
           <ButtonGroup size="small" aria-label="Small button group">
@@ -163,20 +183,17 @@ export default function ScheduleBoard() {
                 </Grid>
                 <Grid container spacing={1}>
                   <Grid item xs={7}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={["TimePicker"]}>
-                        <DemoItem
-                          label={
-                            <Label
-                              componentName="TimePicker"
-                              valueType="time"
-                            />
-                          }
-                        >
-                          <TimePicker />
-                        </DemoItem>
-                      </DemoContainer>
-                    </LocalizationProvider>
+                    <TextField
+                      autoFocus
+                      required
+                      margin="dense"
+                      id="hour"
+                      name="hour"
+                      label="Hour"
+                      type="time"
+                      fullWidth
+                      variant="standard"
+                    />
                   </Grid>
                   <Grid item xs={5}>
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 60 }}>
@@ -207,7 +224,7 @@ export default function ScheduleBoard() {
               </DialogContent>
               <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button type="submit">Subscribe</Button>
+                <Button type="submit">Submit</Button>
               </DialogActions>
             </Dialog>
           </ButtonGroup>

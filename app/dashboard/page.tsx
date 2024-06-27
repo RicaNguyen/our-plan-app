@@ -8,18 +8,26 @@ import MiniTab from "./components/MiniTab";
 export default function Dashboard() {
   return (
     <Container maxWidth="xl" sx={{ mt: 3, mb: 3 }}>
-      <Grid container spacing={17}>
-        <Grid item xs={12} md={6}>
-          <Grid container direction="column" spacing={7}>
-            <Grid item>
+      <Grid container spacing={2}>
+        <Grid item sm={12} lg={8}>
+          <Grid
+            container
+            spacing={1}
+            sx={{
+              pr: {
+                xl: 17,
+              },
+            }}
+          >
+            <Grid item xs={12}>
               <ScheduleBoard />
             </Grid>
-            <Grid item>
+            <Grid item xs={12}>
               <ExamScheduleBoard />
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item sm={12} lg={4}>
           <MiniTab />
         </Grid>
       </Grid>
