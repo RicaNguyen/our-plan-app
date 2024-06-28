@@ -221,8 +221,8 @@ export default function ScheduleBoard() {
                     <TableCell key={day}>
                       {event.day === day ? (
                         <Typography variant="body1">
-                          {event.subject} -{" "}
-                          {event.type === "LT" ? "Lý thuyết" : "Thực hành"}
+                          {event.subject} -
+                          {event.type === "LT" ? " Lý thuyết" : " Thực hành"}
                         </Typography>
                       ) : (
                         <Typography variant="body1">{""}</Typography>
