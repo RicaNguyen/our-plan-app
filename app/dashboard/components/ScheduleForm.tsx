@@ -82,10 +82,6 @@ export default function ScheduleBoard() {
     setOpen(false);
   };
 
-  const handleEditEvent = (day: keyof IEvent[], hour: string) => {
-    console.log(`Editing event`);
-  };
-
   return (
     <Paper
       sx={{

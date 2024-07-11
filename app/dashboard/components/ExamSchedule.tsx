@@ -17,21 +17,14 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableHead,
   TableRow,
   TextField,
   Typography,
-  useMediaQuery,
   useTheme,
 } from "@mui/material";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
 import React, { ChangeEvent } from "react";
-import { Label } from "@mui/icons-material";
-import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
-import { type } from "os";
 
 interface IEvent {
   subject: string;
@@ -56,6 +49,7 @@ const DEFAULT_EMPTY_EVENT: IEvent = {
   document: "",
   note: "",
 };
+
 export default function ExamScheduleBoard() {
   const theme = useTheme();
   const days = [
@@ -102,6 +96,7 @@ export default function ExamScheduleBoard() {
     });
     setOpen(false);
   };
+
   return (
     <Paper
       sx={{
@@ -227,7 +222,7 @@ export default function ExamScheduleBoard() {
                     id="time"
                     name="time"
                     label="Time"
-                    type="time"
+                    type="datetime-local"
                     fullWidth
                     variant="standard"
                     value={newEvent.time}
