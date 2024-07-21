@@ -1,3 +1,4 @@
+"use client";
 import { Box, Card, Tab, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
 import TabContext from "@mui/lab/TabContext";

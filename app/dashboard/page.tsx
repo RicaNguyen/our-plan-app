@@ -1,13 +1,14 @@
-"use client";
+"use server";
 import * as React from "react";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import ScheduleBoard from "./components/ScheduleForm";
 import ExamScheduleBoard from "./components/ExamSchedule";
 import MiniTab from "./components/MiniTab";
-export default function Dashboard() {
+
+export default async function Dashboard() {
   return (
-    <Container maxWidth="xl" sx={{ mt: 3, mb: 3 }}>
+    <Container maxWidth={false} sx={{ mt: 3, mb: 3 }}>
       <Grid container spacing={2}>
         <Grid item sm={12} lg={8}>
           <Grid
@@ -15,7 +16,7 @@ export default function Dashboard() {
             spacing={1}
             sx={{
               pr: {
-                xl: 17,
+                xl: 5,
               },
             }}
           >

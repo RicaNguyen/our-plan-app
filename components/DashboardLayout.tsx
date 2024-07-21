@@ -43,12 +43,6 @@ export const DashboardLayout = (props: any) => {
               Let’s unlock knowledge, shape our future together.
             </Typography>
           </Container>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          ></Box>
 
           {children}
         </Box>
