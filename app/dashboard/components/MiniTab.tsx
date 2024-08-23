@@ -30,12 +30,12 @@ export default function MiniTab() {
           <TabList onChange={handleChange} aria-label="API minitab">
             <Tab label="Deadline" value="1" />
             <Tab label="Upload" value="2" />
-            <Tab label="News" value="3" />
+            <Tab label="Tips" value="3" />
           </TabList>
         </Box>
         <TabPanel value="1">Deadline</TabPanel>
         <TabPanel value="2">Upload</TabPanel>
-        <TabPanel value="3">News</TabPanel>
+        <TabPanel value="3">Tips</TabPanel>
       </TabContext>
     </Card>
   );

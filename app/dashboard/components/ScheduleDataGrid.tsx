@@ -199,6 +199,7 @@ export default function ScheduleDataGrid() {
           return [
             <GridActionsCellItem
               icon={<SaveIcon />}
+              key="Save"
               label="Save"
               sx={{
                 color: "primary.main",
@@ -207,6 +208,7 @@ export default function ScheduleDataGrid() {
             />,
             <GridActionsCellItem
               icon={<CancelIcon />}
+              key="Cancel"
               label="Cancel"
               className="textPrimary"
               onClick={handleCancelClick(id)}
@@ -218,6 +220,7 @@ export default function ScheduleDataGrid() {
         return [
           <GridActionsCellItem
             icon={<EditIcon />}
+            key="Edit"
             label="Edit"
             className="textPrimary"
             onClick={handleEditClick(id)}
@@ -225,6 +228,7 @@ export default function ScheduleDataGrid() {
           />,
           <GridActionsCellItem
             icon={<DeleteIcon />}
+            key="Delete"
             label="Delete"
             onClick={handleDeleteClick(id)}
             color="inherit"

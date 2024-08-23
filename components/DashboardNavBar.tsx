@@ -15,6 +15,21 @@ import {
   Toolbar,
   ClickAwayListener,
   alpha,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  SelectChangeEvent,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
@@ -23,7 +38,8 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import { SIDE_BAR_WIDTH } from "./constants";
 import { ReactNode, useState } from "react";
-import { grey } from "@/components/theme/theme";
+import { grey } from "@/components/Theme/theme";
+import React from "react";
 
 const HEADER_MOBILE = 64;
 const HEADER_DESKTOP = 92;
@@ -99,7 +115,24 @@ const SearchBar = (): ReactNode => {
 
 export const DashboardNavbar = (props: any) => {
   const { onSidebarOpen, ...other } = props;
+  const [open, setOpen] = React.useState(false);
+  const [selection, setSelection] = useState("");
 
+  const handleSelectionChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setSelection(event.target.value);
+  };
+  const handleChange = (event: SelectChangeEvent) => {
+    setSelection(event.target.value);
+  };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <>
       <DashboardNavbarRoot
@@ -170,9 +203,109 @@ export const DashboardNavbar = (props: any) => {
                     width: "180px",
                     borderRadius: "999px",
                   }}
+                  onClick={handleClickOpen}
                 >
                   <AddTwoToneIcon /> Share your docs
                 </Button>
+                <Dialog
+                  open={open}
+                  onClose={handleClose}
+                  PaperProps={{
+                    component: "form",
+                    onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+                      event.preventDefault();
+                      const formData = new FormData(event.currentTarget);
+                      const formJson = Object.fromEntries(
+                        (formData as any).entries()
+                      );
+                      const email = formJson.email;
+                      console.log(email);
+                      handleClose();
+                    },
+                  }}
+                >
+                  <DialogTitle>Share your docs</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>
+                      Thank you, We truly value your contribution to the
+                      community!
+                    </DialogContentText>
+                    <TextField
+                      autoFocus
+                      required
+                      margin="dense"
+                      id="subject"
+                      name="subject"
+                      label="Subject"
+                      type="text"
+                      fullWidth
+                      variant="standard"
+                    />
+                    <FormControl fullWidth variant="standard">
+                      <InputLabel id="selection-label">
+                        Your docs type?
+                      </InputLabel>
+                      <Select
+                        labelId="selection-label"
+                        id="selection"
+                        value={selection}
+                        onChange={handleChange}
+                      >
+                        <MenuItem value="link">Link</MenuItem>
+                        <MenuItem value="file">File</MenuItem>
+                      </Select>
+                    </FormControl>
+                    {selection === "link" ? (
+                      <TextField
+                        id="url"
+                        label="URL"
+                        // value={url}
+                        // onChange={handleUrlChange}
+                        fullWidth
+                        variant="standard"
+                      />
+                    ) : (
+                      <input
+                        type="file"
+                        id="file"
+                        // onChange={handleFileChange}
+                      />
+                    )}
+                    <FormControl>
+                      <FormLabel id="aboutDoc"></FormLabel>
+                      <RadioGroup
+                        row
+                        aria-labelledby="aboutDoc"
+                        name="row-radio-buttons-group"
+                      >
+                        <FormControlLabel
+                          value="exercises"
+                          control={<Radio />}
+                          label="Exercise"
+                        />
+                        <FormControlLabel
+                          value="slides"
+                          control={<Radio />}
+                          label="Slide"
+                        />
+                        <FormControlLabel
+                          value="tests"
+                          control={<Radio />}
+                          label="Tests"
+                        />
+                        <FormControlLabel
+                          value="other"
+                          control={<Radio />}
+                          label="Other"
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button type="submit">Submit</Button>
+                  </DialogActions>
+                </Dialog>
               </Paper>
               <Avatar
                 sx={{

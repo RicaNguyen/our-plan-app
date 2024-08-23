@@ -15,7 +15,7 @@ import { Box, Divider, Drawer, Theme, useMediaQuery } from "@mui/material";
 import NextImage from "next/image";
 import { NavItem } from "../app/dashboard/components/NavItem";
 import { SIDE_BAR_WIDTH } from "./constants";
-import { ToggleColorMode } from "@/components/theme/ColorModeContext";
+import { ToggleColorMode } from "@/components/Theme/ColorModeContext";
 
 const items = [
   {

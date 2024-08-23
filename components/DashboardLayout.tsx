@@ -32,7 +32,7 @@ export const DashboardLayout = (props: any) => {
           }}
         >
           <Container
-            maxWidth="xl"
+            maxWidth={false}
             sx={{
               mt: 4,
             }}
