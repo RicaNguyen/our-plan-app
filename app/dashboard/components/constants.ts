@@ -1,5 +1,5 @@
 import { GridRowsProp } from "@mui/x-data-grid";
-import { randomId } from "@mui/x-data-grid-generator";
+import { randomArrayItem, randomCreatedDate, randomId } from "@mui/x-data-grid-generator";
 export const TILETABLE_COL_HEADERS = [
   { field: "time", headerName: "Time" },
   {
@@ -52,3 +52,55 @@ export const TILETABLE_INITIAL_ROWS: GridRowsProp = [
   if (a.time < b.time) return -1;
   return 1;
 });
+const roles = ["Allowance", "Not Allowance"];
+const randomRole = () => {
+  return randomArrayItem(roles);
+};
+export const TILETABLE_INITIAL_ROWS_EXAM: GridRowsProp = [
+  {
+    id: randomId(),
+    subject: "A",
+    dateTime: randomCreatedDate(),
+    room: "23",
+    timeAllowance: 20,
+    document: 22,
+    note: "",
+  },
+  {
+    id: randomId(),
+    subject: "B",
+    dateTime: randomCreatedDate(),
+    room: "23",
+    timeAllowance: 20,
+    document: randomRole(),
+    note: "",
+  },
+  {
+    id: randomId(),
+    subject: "C",
+    dateTime: randomCreatedDate(),
+    room: "23",
+    timeAllowance: 20,
+    document: 22,
+    note: "",
+  },
+  {
+    id: randomId(),
+    subject: "D",
+    dateTime: randomCreatedDate(),
+    room: "23",
+    timeAllowance: 20,
+    document: randomRole(),
+    note: "",
+  },
+  {
+    id: randomId(),
+    subject: "E",
+    dateTime: randomCreatedDate(),
+    room: "23",
+    timeAllowance: 20,
+    document: randomRole(),
+    note: "",
+  },
+];
+

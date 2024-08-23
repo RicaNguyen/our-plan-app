@@ -39,6 +39,8 @@ import {
   randomId,
   randomArrayItem,
 } from "@mui/x-data-grid-generator";
+import { ExitToApp } from "@mui/icons-material";
+import ExamScheduleDataGrid from "./ExamScheduleDataGrid";
 const roles = ["Allowance", "Not Allowance"];
 const randomRole = () => {
   return randomArrayItem(roles);
@@ -199,7 +201,7 @@ export default function ExamScheduleBoard() {
           <Typography variant="h6">Exam Schedule</Typography>
         </Box>
       </Box>
-      <DataGrid rows={rows} columns={columns} hideFooter></DataGrid>
+      <ExamScheduleDataGrid></ExamScheduleDataGrid>
     </Paper>
   );
 }
