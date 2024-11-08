@@ -1,4 +1,4 @@
-import { Box, CssBaseline } from "@mui/material";
+import { Box } from "@mui/material";
 import AppAppBar from "../components/landingappbar";
 import Hero from "@/components/hero";
 

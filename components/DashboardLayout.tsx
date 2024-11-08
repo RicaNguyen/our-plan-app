@@ -5,6 +5,8 @@ import { styled } from "@mui/material/styles";
 import { DashboardNavbar } from "./DashboardNavBar";
 import { DashboardSidebar } from "./DashBoardSideBar";
 import { SIDE_BAR_WIDTH } from "./constants";
+import { Provider } from "react-redux";
+import store from "./features/store";
 
 const DashboardLayoutRoot = styled("div")(({ theme }) => ({
   display: "flex",
@@ -21,7 +23,7 @@ export const DashboardLayout = (props: any) => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
 
   return (
-    <>
+    <Provider store={store}>
       <DashboardLayoutRoot>
         <Box
           sx={{
@@ -52,7 +54,7 @@ export const DashboardLayout = (props: any) => {
         onCloseSidebar={() => setSidebarOpen(false)}
         openSidebar={isSidebarOpen}
       />
-    </>
+    </Provider>
   );
 };
 

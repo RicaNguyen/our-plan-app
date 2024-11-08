@@ -17,6 +17,8 @@ import {
   FormControlLabel,
   FormLabel,
   IconButton,
+  Input,
+  InputAdornment,
   InputBase,
   InputLabel,
   MenuItem,
@@ -34,49 +36,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import Link from "@mui/material/Link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
-
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.black, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.black, 0.25),
-  },
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 1),
-  variant: "outlined",
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  width: "100%",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "20ch",
-      },
-    },
-  },
-}));
+import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
+import { MySearch } from "@/components/MySearch";
 
 interface MenuItem {
   label: string;
@@ -106,22 +67,12 @@ export default function SideBarGroup() {
   return (
     <Grid container spacing={2}>
       <Grid item xs={9}>
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search…"
-            inputProps={{ "aria-label": "search" }}
-          />
-        </Search>
+        <MySearch />
       </Grid>
       <Grid item xs={2}>
-        <Button
-          onClick={handleClickOpen}
-        >
-          <GroupAddRoundedIcon />
-        </Button>
+        <IconButton onClick={handleClickOpen}>
+          <GroupAddRoundedIcon color="primary" />
+        </IconButton>
         <Dialog
           open={open}
           onClose={handleClose}
@@ -130,9 +81,7 @@ export default function SideBarGroup() {
             onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
               event.preventDefault();
               const formData = new FormData(event.currentTarget);
-              const formJson = Object.fromEntries(
-                (formData as any).entries()
-              );
+              const formJson = Object.fromEntries((formData as any).entries());
               const email = formJson.email;
               console.log(email);
               handleClose();
@@ -142,53 +91,49 @@ export default function SideBarGroup() {
           <DialogTitle>Create Group or Comunity</DialogTitle>
           <DialogContent>
             {/* input name and avatar */}
-            <Grid container spacing={2} alignItems={"center"} alignContent={'center'} justifyItems={"center"} justifyContent={"center"}>
-              <Grid item xs={4} alignItems={"center"} alignContent={'center'} justifyItems={"center"} justifyContent={"center"}>
+            <Grid
+              container
+              direction="row"
+              sx={{
+                justifyContent: "space-between",
+                alignItems: "center",
+                mb: 2,
+              }}
+            >
+              <Grid item>
                 <FormControl fullWidth variant="standard">
-                  <Button
-                    component="label"
-                    role={undefined}
-                    tabIndex={-1}
-
-                  >
-                    {/* <InputBase
-                  type="file"
-                // onChange={(event) => console.log(event.target.files)}
-                /> */}
+                  <IconButton component="label">
+                    <InputBase
+                      type="file"
+                      style={{
+                        opacity: 0,
+                      }}
+                      sx={{
+                        width: 0,
+                        height: 0,
+                      }}
+                    />
                     <PhotoCameraIcon />
-                  </Button>
+                  </IconButton>
                 </FormControl>
               </Grid>
-              <Grid item xs={8} alignItems={"center"} alignContent={'center'} justifyItems={"center"} justifyContent={"center"}>
-
-                <TextField
-                  autoFocus
-                  required
-                  margin="dense"
-                  id="group-name"
-                  name="groupname"
-                  label="Input your group name"
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                />
+              <Grid item>
+                <FormControl fullWidth variant="standard">
+                  <TextField
+                    autoFocus
+                    required
+                    id="group-name"
+                    name="groupname"
+                    type="text"
+                    fullWidth
+                    variant="standard"
+                    placeholder="Enter your group name"
+                  />
+                </FormControl>
               </Grid>
             </Grid>
             {/* search your member by email or name */}
-            <Search
-              sx={{
-                width: "180px",
-                borderRadius: "999px",
-                variant: "outlined",
-              }}>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Input name, email, or phone"
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </Search>
+            <MySearch />
             <Divider style={{ marginTop: 2 }} />
             {/* list friend with radio checkbox */}
             {/* <Typography>List friend with radio checkbox</Typography> */}
@@ -198,10 +143,21 @@ export default function SideBarGroup() {
               name="radio-buttons-group-friends"
             >
               {/* right format: radio + avatar + name */}
-              <FormControlLabel value="Henry" control={<Radio />} label="Henry" />
-              <FormControlLabel value="Marry" control={<Radio />} label="Marry" />
-              <FormControlLabel value="Petter" control={<Radio />} label="Petter" />
-
+              <FormControlLabel
+                value="Henry"
+                control={<Radio />}
+                label="Henry"
+              />
+              <FormControlLabel
+                value="Marry"
+                control={<Radio />}
+                label="Marry"
+              />
+              <FormControlLabel
+                value="Petter"
+                control={<Radio />}
+                label="Petter"
+              />
             </RadioGroup>
           </DialogContent>
           <DialogActions>
@@ -213,7 +169,9 @@ export default function SideBarGroup() {
       <Grid item xs={12}>
         <Link
           href="?targetViewGroup=joined-group"
-          color={targetViewGroup === "joined-group" ? "blue" : "inherit"}
+          color={
+            targetViewGroup === "joined-group" ? "primary.main" : "inherit"
+          }
         >
           <Diversity2RoundedIcon /> Joined Groups & Comunities{" "}
         </Link>
@@ -221,7 +179,7 @@ export default function SideBarGroup() {
       <Grid item xs={12}>
         <Link
           href="?targetViewGroup=invitations"
-          color={targetViewGroup === "invitations" ? "blue" : "inherit"}
+          color={targetViewGroup === "invitations" ? "primary.main" : "inherit"}
         >
           <GroupAddRoundedIcon /> Group & Comunity invitations
         </Link>
@@ -232,4 +190,3 @@ export default function SideBarGroup() {
 function setOpen(arg0: boolean) {
   throw new Error("Function not implemented.");
 }
-

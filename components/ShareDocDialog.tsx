@@ -1,92 +1,133 @@
-import React, { useState } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Select, MenuItem, InputLabel, FormControl, Button } from '@mui/material';
+import React, { useState } from "react";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  Button,
+  DialogContentText,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  SelectChangeEvent,
+} from "@mui/material";
 
-const MyDialog = () => {
-    const [open, setOpen] = useState(false);
-    const [selection, setSelection] = useState('');
-    const [url, setUrl] = useState('');
-    const [file, setFile] = useState(null);
-    const [name, setName] = useState('');
+export const ShareDocsDialog = () => {
+  const [open, setOpen] = useState(false);
+  const [selection, setSelection] = useState("");
+  const [url, setUrl] = useState("");
+  const [file, setFile] = useState(null);
+  const [name, setName] = useState("");
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleChange = (event: SelectChangeEvent) => {
+    setSelection(event.target.value);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+  const handleSelectionChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setSelection(event.target.value);
+  };
 
-    const handleSelectionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelection(event.target.value);
-    };
+  const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUrl(event.target.value);
+  };
 
-    const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setUrl(event.target.value);
-    };
+  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //     setFile(event.target.files?.[0]);
+  // };
 
-    // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     setFile(event.target.files?.[0]);
-    // };
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+  };
 
-    const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setName(event.target.value);
-    };
-
-
-    return (
-        <div>
-            <Button variant="contained" color="primary" onClick={handleOpen}>
-                Open Dialog
-            </Button>
-            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">My Dialog</DialogTitle>
-                <DialogContent>
-                    <FormControl fullWidth>
-                        <InputLabel id="selection-label">Selection</InputLabel>
-                        <Select
-                            labelId="selection-label"
-                            id="selection"
-                            value={selection}
-                        // onChange={handleSelectionChange}
-                        >
-                            <MenuItem value="link">Link</MenuItem>
-                            <MenuItem value="file">File</MenuItem>
-                        </Select>
-                    </FormControl>
-                    {selection === 'link' ? (
-                        <TextField
-                            id="url"
-                            label="URL"
-                            value={url}
-                            onChange={handleUrlChange}
-                            fullWidth
-                        />
-                    ) : (
-                        <input
-                            type="file"
-                            id="file"
-                        // onChange={handleFileChange}
-                        />
-                    )}
-                    <TextField
-                        id="name"
-                        label="Name"
-                        value={name}
-                        onChange={handleNameChange}
-                        fullWidth
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={() => console.log('Submit')} color="primary">
-                        Submit
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </div>
-    );
+  return (
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      PaperProps={{
+        component: "form",
+        onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+          event.preventDefault();
+          const formData = new FormData(event.currentTarget);
+          const formJson = Object.fromEntries((formData as any).entries());
+          const email = formJson.email;
+          console.log(email);
+          handleClose();
+        },
+      }}
+    >
+      <DialogTitle>Share your docs</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          Thank you, We truly value your contribution to the community!
+        </DialogContentText>
+        <TextField
+          autoFocus
+          required
+          margin="dense"
+          id="subject"
+          name="subject"
+          label="Subject"
+          type="text"
+          fullWidth
+          variant="standard"
+        />
+        <FormControl fullWidth variant="standard">
+          <InputLabel id="selection-label">Your docs type?</InputLabel>
+          <Select
+            labelId="selection-label"
+            id="selection"
+            value={selection}
+            onChange={handleChange}
+          >
+            <MenuItem value="link">Link</MenuItem>
+            <MenuItem value="file">File</MenuItem>
+          </Select>
+        </FormControl>
+        {selection === "link" ? (
+          <TextField id="url" label="URL" fullWidth variant="standard" />
+        ) : (
+          <input type="file" id="file" />
+        )}
+        <FormControl>
+          <FormLabel id="aboutDoc"></FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="aboutDoc"
+            name="row-radio-buttons-group"
+          >
+            <FormControlLabel
+              value="exercises"
+              control={<Radio />}
+              label="Exercise"
+            />
+            <FormControlLabel
+              value="slides"
+              control={<Radio />}
+              label="Slide"
+            />
+            <FormControlLabel value="tests" control={<Radio />} label="Tests" />
+            <FormControlLabel value="other" control={<Radio />} label="Other" />
+          </RadioGroup>
+        </FormControl>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button type="submit">Submit</Button>
+      </DialogActions>
+    </Dialog>
+  );
 };
-
-export default MyDialog;

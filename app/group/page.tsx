@@ -8,9 +8,14 @@ import TitleGroup from "./components/TitleGroup";
 import JoinedGroup from "./components/JoinedGroup";
 import Invitation from "./components/Invitations";
 import { PageProps } from "@/components/type";
+import { redirect } from "next/navigation";
 
 export default async function GroupPage(props: PageProps) {
   const targetViewGroup = props.searchParams.targetViewGroup;
+
+  if (!targetViewGroup) {
+    redirect("group?targetViewGroup=joined-group");
+  }
 
   return (
     <Container maxWidth={false} sx={{ mt: 3, mb: 3 }}>

@@ -41,6 +41,27 @@ import { ReactNode, useState } from "react";
 import { grey } from "@/components/Theme/theme";
 import React from "react";
 
+import { useForm, useWatch } from "react-hook-form";
+import { FormInputText } from "./form-component/FormInputText";
+import { FormInputDropdown } from "./form-component/FormInputDropdown";
+import { FormInputRadio } from "./form-component/FormInputRadio";
+import { Provider, useDispatch } from "react-redux";
+import { setFormData } from "./features/formSlice";
+import { FormInputFile } from "./form-component/FormInputFile";
+interface IFormInput {
+  subject: string; // Add this field
+  link?: string; // Optional if you're handling links
+  file?: File | null; // Optional for file handling
+  radioValue: string;
+  dropdownValue: string;
+}
+const defaultValues: IFormInput = {
+  subject: "", // Required
+  link: "", // Optional
+  file: null, // Optional
+  radioValue: "",
+  dropdownValue: "",
+};
 const HEADER_MOBILE = 64;
 const HEADER_DESKTOP = 92;
 
@@ -114,6 +135,20 @@ const SearchBar = (): ReactNode => {
 };
 
 export const DashboardNavbar = (props: any) => {
+  const dispatch = useDispatch();
+  const { handleSubmit, reset, control } = useForm<IFormInput>({
+    defaultValues: defaultValues,
+  });
+  const dropdownValue = useWatch({
+    control,
+    name: "dropdownValue",
+  });
+  const onSubmit = (data: IFormInput) => {
+    // Dispatch the form data to the Redux store
+    dispatch(setFormData(data));
+    console.log(data); // You can keep this for debugging
+    handleClose(); // Close the dialog after submission
+  };
   const { onSidebarOpen, ...other } = props;
   const [open, setOpen] = React.useState(false);
   const [selection, setSelection] = useState("");
@@ -195,9 +230,9 @@ export const DashboardNavbar = (props: any) => {
                   <SendOutlinedIcon />
                 </Badge>
               </IconButton>
+              {/* Share doc form */}
               <Paper sx={{ borderRadius: "999px" }}>
                 <Button
-                  //
                   variant="outlined"
                   sx={{
                     width: "180px",
@@ -212,16 +247,7 @@ export const DashboardNavbar = (props: any) => {
                   onClose={handleClose}
                   PaperProps={{
                     component: "form",
-                    onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-                      event.preventDefault();
-                      const formData = new FormData(event.currentTarget);
-                      const formJson = Object.fromEntries(
-                        (formData as any).entries()
-                      );
-                      const email = formJson.email;
-                      console.log(email);
-                      handleClose();
-                    },
+                    onSubmit: handleSubmit(onSubmit),
                   }}
                 >
                   <DialogTitle>Share your docs</DialogTitle>
@@ -230,80 +256,41 @@ export const DashboardNavbar = (props: any) => {
                       Thank you, We truly value your contribution to the
                       community!
                     </DialogContentText>
-                    <TextField
-                      autoFocus
-                      required
-                      margin="dense"
-                      id="subject"
+                    <FormInputText
                       name="subject"
+                      control={control}
                       label="Subject"
-                      type="text"
-                      fullWidth
-                      variant="standard"
                     />
-                    <FormControl fullWidth variant="standard">
-                      <InputLabel id="selection-label">
-                        Your docs type?
-                      </InputLabel>
-                      <Select
-                        labelId="selection-label"
-                        id="selection"
-                        value={selection}
-                        onChange={handleChange}
-                      >
-                        <MenuItem value="link">Link</MenuItem>
-                        <MenuItem value="file">File</MenuItem>
-                      </Select>
-                    </FormControl>
-                    {selection === "link" ? (
-                      <TextField
-                        id="url"
-                        label="URL"
-                        // value={url}
-                        // onChange={handleUrlChange}
-                        fullWidth
-                        variant="standard"
+                    <FormInputDropdown
+                      name="dropdownValue"
+                      control={control}
+                      label="Your docs type?"
+                    />
+                    {dropdownValue === "link" ? (
+                      <FormInputText
+                        name="link"
+                        control={control}
+                        label="Link"
                       />
-                    ) : (
-                      <input
-                        type="file"
-                        id="file"
-                        // onChange={handleFileChange}
-                      />
-                    )}
-                    <FormControl>
-                      <FormLabel id="aboutDoc"></FormLabel>
-                      <RadioGroup
-                        row
-                        aria-labelledby="aboutDoc"
-                        name="row-radio-buttons-group"
-                      >
-                        <FormControlLabel
-                          value="exercises"
-                          control={<Radio />}
-                          label="Exercise"
-                        />
-                        <FormControlLabel
-                          value="slides"
-                          control={<Radio />}
-                          label="Slide"
-                        />
-                        <FormControlLabel
-                          value="tests"
-                          control={<Radio />}
-                          label="Tests"
-                        />
-                        <FormControlLabel
-                          value="other"
-                          control={<Radio />}
-                          label="Other"
-                        />
-                      </RadioGroup>
-                    </FormControl>
+                    ) : dropdownValue === "file" ? (
+                      <FormInputFile control={control} name="file" label="" />
+                    ) : null}
+                    <FormInputRadio
+                      name={"radioValue"}
+                      control={control}
+                      label={"Type of Learning Materials"}
+                    />
                   </DialogContent>
                   <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit">Submit</Button>
+                    <Button onClick={() => reset()} variant={"outlined"}>
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={handleSubmit(onSubmit)}
+                      variant={"contained"}
+                    >
+                      Submit
+                    </Button>
                   </DialogActions>
                 </Dialog>
               </Paper>
