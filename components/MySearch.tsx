@@ -8,9 +8,10 @@ export const MySearch = () => {
       sx={(theme) => ({
         padding: 0.5,
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: alpha(theme.palette.common.black, 0.15),
+        border: "1px groove",
+        backgroundColor: alpha(theme.palette.common.white, 0.15),
         "&:hover": {
-          backgroundColor: alpha(theme.palette.common.black, 0.25),
+          backgroundColor: alpha(theme.palette.common.white, 0.25),
         },
         width: "100%",
         [theme.breakpoints.up("sm")]: {

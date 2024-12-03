@@ -133,7 +133,10 @@ export default function SideBarGroup() {
               </Grid>
             </Grid>
             {/* search your member by email or name */}
-            <MySearch />
+            <Box sx={{ mb: 2 }}>
+              <MySearch />
+            </Box>
+
             <Divider style={{ marginTop: 2 }} />
             {/* list friend with radio checkbox */}
             {/* <Typography>List friend with radio checkbox</Typography> */}

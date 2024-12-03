@@ -3,6 +3,7 @@ import { Box, Card, Tab, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
 import TabContext from "@mui/lab/TabContext";
 import { TabList, TabPanel } from "@mui/lab";
+import DeadlineList from "./DeadlineList";
 
 export default function MiniTab() {
   const theme = useTheme();
@@ -33,7 +34,10 @@ export default function MiniTab() {
             <Tab label="Tips" value="3" />
           </TabList>
         </Box>
-        <TabPanel value="1">Deadline</TabPanel>
+        {/* data: subject-name, time, type{group/personal}, title deadline, state(in progress/complete/expire) */}
+        <TabPanel value="1">
+          <DeadlineList />
+        </TabPanel>
         <TabPanel value="2">Upload</TabPanel>
         <TabPanel value="3">Tips</TabPanel>
       </TabContext>

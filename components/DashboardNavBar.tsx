@@ -30,6 +30,7 @@ import {
   Radio,
   RadioGroup,
   SelectChangeEvent,
+  Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
@@ -48,6 +49,7 @@ import { FormInputRadio } from "./form-component/FormInputRadio";
 import { Provider, useDispatch } from "react-redux";
 import { setFormData } from "./features/formSlice";
 import { FormInputFile } from "./form-component/FormInputFile";
+import { space } from "postcss/lib/list";
 interface IFormInput {
   subject: string; // Add this field
   link?: string; // Optional if you're handling links
@@ -151,16 +153,7 @@ export const DashboardNavbar = (props: any) => {
   };
   const { onSidebarOpen, ...other } = props;
   const [open, setOpen] = React.useState(false);
-  const [selection, setSelection] = useState("");
 
-  const handleSelectionChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setSelection(event.target.value);
-  };
-  const handleChange = (event: SelectChangeEvent) => {
-    setSelection(event.target.value);
-  };
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -169,7 +162,7 @@ export const DashboardNavbar = (props: any) => {
     setOpen(false);
   };
   return (
-    <>
+    <Box>
       <DashboardNavbarRoot
         sx={{
           left: {
@@ -256,30 +249,53 @@ export const DashboardNavbar = (props: any) => {
                       Thank you, We truly value your contribution to the
                       community!
                     </DialogContentText>
-                    <FormInputText
-                      name="subject"
-                      control={control}
-                      label="Subject"
-                    />
-                    <FormInputDropdown
-                      name="dropdownValue"
-                      control={control}
-                      label="Your docs type?"
-                    />
-                    {dropdownValue === "link" ? (
-                      <FormInputText
-                        name="link"
-                        control={control}
-                        label="Link"
-                      />
-                    ) : dropdownValue === "file" ? (
-                      <FormInputFile control={control} name="file" label="" />
-                    ) : null}
-                    <FormInputRadio
-                      name={"radioValue"}
-                      control={control}
-                      label={"Type of Learning Materials"}
-                    />
+                    <Box
+                      display="flex"
+                      flexDirection="column"
+                      width="100%" // Adjust width as needed
+                      height="auto" // Adjust height as needed
+                    >
+                      <Box mb={1}>
+                        <FormInputText
+                          name="subject"
+                          control={control}
+                          label="Subject"
+                        />
+                      </Box>
+                      <Box mb={1}>
+                        <Box sx={{ mb: 2 }}>
+                          <Typography variant="body2">
+                            Your Doc Type?
+                          </Typography>
+                          <FormInputDropdown
+                            name="dropdownValue"
+                            control={control}
+                            label=""
+                          />
+                        </Box>
+
+                        {dropdownValue === "link" ? (
+                          <FormInputText
+                            name="link"
+                            control={control}
+                            label="Link"
+                          />
+                        ) : dropdownValue === "file" ? (
+                          <FormInputFile
+                            control={control}
+                            name="file"
+                            label=""
+                          />
+                        ) : null}
+                      </Box>
+                      <Box>
+                        <FormInputRadio
+                          name={"radioValue"}
+                          control={control}
+                          label={"Type of Learning Materials"}
+                        />
+                      </Box>
+                    </Box>
                   </DialogContent>
                   <DialogActions>
                     <Button onClick={() => reset()} variant={"outlined"}>
@@ -308,7 +324,7 @@ export const DashboardNavbar = (props: any) => {
           </Box>
         </Toolbar>
       </DashboardNavbarRoot>
-    </>
+    </Box>
   );
 };
 

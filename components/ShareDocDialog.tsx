@@ -45,10 +45,6 @@ export const ShareDocsDialog = () => {
     setUrl(event.target.value);
   };
 
-  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //     setFile(event.target.files?.[0]);
-  // };
-
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
