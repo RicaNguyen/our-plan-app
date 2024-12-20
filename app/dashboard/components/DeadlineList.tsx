@@ -1,9 +1,32 @@
 "use client";
-import { Box, Card, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Card,
+  Chip,
+  colors,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import React from "react";
+import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
+import SubjectIcon from "@mui/icons-material/Subject";
+import LabelOutlinedIcon from "@mui/icons-material/LabelOutlined";
+import EventOutlinedIcon from "@mui/icons-material/EventOutlined";
 
 export default function DeadlineList() {
   const theme = useTheme();
+  const [age, setAge] = React.useState("");
+  const handleChange = (event: SelectChangeEvent) => {
+    setAge(event.target.value);
+  };
   const data = [
     {
       subject: "Mathematics",
@@ -46,50 +69,127 @@ export default function DeadlineList() {
       state: "in progress",
     },
   ];
+  const calculateDaysLeft = (deadline: string): number => {
+    const today = new Date();
+    const deadlineDate = new Date(deadline);
+    const timeDiff = deadlineDate.getTime() - today.getTime();
+    const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    return daysLeft >= 0 ? daysLeft : 0;
+  };
+
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      width="100%"
-      maxHeight={400}
-      overflow="auto"
-    >
+    <Box display="flex" flexDirection="column" maxHeight={700} overflow="auto">
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
+        <ButtonGroup aria-label="Basic button group">
+          <Button>Valid</Button>
+          <Button>Submitted </Button>
+          <Button>Overdue</Button>
+        </ButtonGroup>
+        <FormControl sx={{ m: 1, minWidth: 70 }} size="small">
+          <InputLabel id="demo-select-small-label">Sort</InputLabel>
+          <Select
+            labelId="demo-select-small-label"
+            id="demo-select-small"
+            value={age}
+            label="Sort"
+            onChange={handleChange}
+          >
+            <MenuItem value={0}>Newest to Oldest</MenuItem>
+            <MenuItem value={1}>Oldest to Newest</MenuItem>
+          </Select>
+        </FormControl>
+        <Button variant="outlined">
+          <AddTwoToneIcon /> Add Task
+        </Button>
+      </Box>
+
       {data.map((item, index) => (
-        <Box key={index} display="flex" justifyContent="space-between" mb={2}>
-          <Box width="48%">
-            <Box
-              bgcolor="orange"
-              textAlign="center"
-              sx={{ borderRadius: "4px" }}
-            >
-              <Typography variant="h6" color={"white"}>
-                {item.subject}
+        <Box
+          key={index}
+          mb={2}
+          sx={{
+            border: "1px groove",
+            borderRadius: "50px",
+            p: "12px",
+            justifyItems: "center",
+            backgroundColor: " #FBE0E8FF",
+          }}
+        >
+          <Grid container>
+            <Grid item xs={8} sm={9} xl={9} md={9} lg={9}>
+              <Typography sx={{ fontSize: "18px", fontWeight: 700 }}>
+                {item.title}
               </Typography>
-            </Box>
-            <Typography>Time: {item.time}</Typography>
-            <Typography>Type: {item.type}</Typography>
-            <Typography>Title: {item.title}</Typography>
-            <Typography>Deadline: {item.deadline}</Typography>
-            <Typography>State: {item.state}</Typography>
-          </Box>
-          {index + 1 < data.length && (
-            <Box width="48%">
               <Box
-                bgcolor="orange"
-                textAlign="center"
-                sx={{ borderRadius: "4px" }}
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                }}
               >
-                <Typography variant="h6" color={"white"}>
-                  {data[index + 1].subject}
+                <SubjectIcon sx={{ color: "#9095A1FF" }} />
+                <Typography sx={{ fontSize: "14px", fontWeight: 400 }}>
+                  {item.subject}
                 </Typography>
               </Box>
-              <Typography>Time: {data[index + 1].time}</Typography>
-              <Typography>Type: {data[index + 1].type}</Typography>
-              <Typography>Title: {data[index + 1].title}</Typography>
-              <Typography>Deadline: {data[index + 1].deadline}</Typography>
-              <Typography>State: {data[index + 1].state}</Typography>
-            </Box>
-          )}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                }}
+              >
+                <LabelOutlinedIcon sx={{ color: "#9095A1FF" }} />
+                <Chip label={item.type} />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <EventOutlinedIcon sx={{ color: "#9095A1FF" }} />
+                <Typography
+                  sx={{ fontSize: "14px", fontWeight: 400, color: "#9095A1FF" }}
+                >
+                  Due Date:
+                </Typography>
+                <Typography> {item.time}</Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={2} sm={3} xl={1} md={1} lg={1}>
+              <Box
+                display="flex"
+                sx={{
+                  width: { xs: "15vw", sm: "10vw", md: "5vw" },
+                  height: { xs: "15vw", sm: "10vw", md: "5vw" },
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  color: "white",
+                  textAlign: "center",
+                  boxSizing: "border-box",
+                  border: "1px groove",
+                  backgroundColor: "#DEE1E6FF",
+                }}
+              >
+                <Typography variant="h6" color={"red"}>
+                  10
+                </Typography>
+                <Typography variant="body2" color={"red"}>
+                  Days Left
+                </Typography>
+              </Box>
+            </Grid>
+          </Grid>
         </Box>
       ))}
     </Box>
